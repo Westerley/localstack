@@ -1,0 +1,31 @@
+{
+  "Comment": "Transaction Processor State Machine",
+  "StartAt": "ProcessTransaction",
+  "States": {
+    "ProcessTransaction": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.TransactionType",
+          "StringEquals": "PURCHASE",
+          "Next": "web_process_purchase"
+        },
+        {
+          "Variable": "$.TransactionType",
+          "StringEquals": "REFUND",
+          "Next": "web_process_refund"
+        }
+      ]
+    },
+    "web_process_purchase": {
+      "Type": "Task",
+      "Resource": "${web_process_purchase}",
+      "End": true
+    },
+    "web_process_refund": {
+      "Type": "Task",
+      "Resource": "${web_process_refund}",
+      "End": true
+    }
+  }
+}

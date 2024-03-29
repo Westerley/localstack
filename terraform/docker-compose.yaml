@@ -1,0 +1,15 @@
+version: "3.8"
+ 
+services:
+    localstack:
+        container_name: localstack
+        image: localstack/localstack
+        ports:
+            - "127.0.0.1:4566:4566"            # LocalStack Gateway
+            - "127.0.0.1:4510-4559:4510-4559"  # external services port range
+        environment:
+            - AWS_DEFAULT_REGION=sa-east-1
+            - SERVICES=s3,sns
+            - DEBUG=${DEBUG:-0}
+        volumes:
+            - "./localstack:/var/lib/localstack"
